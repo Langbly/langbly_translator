@@ -1,0 +1,10 @@
+tmgmt.translator.*.settings:
+  type: mapping
+  label: 'Langbly translator settings'
+  mapping:
+    api_key:
+      type: string
+      label: 'Langbly API Key'
+    api_url:
+      type: string
+      label: 'API Base URL'

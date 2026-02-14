@@ -1,0 +1,7 @@
+name: Langbly Translator
+description: 'Langbly machine translation provider for TMGMT. Translate content between 100+ languages using LLM-powered translations.'
+type: module
+core_version_requirement: ^10 || ^11
+package: Translation Management
+dependencies:
+  - tmgmt:tmgmt

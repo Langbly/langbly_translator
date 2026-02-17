@@ -8,6 +8,7 @@ use Drupal\tmgmt\ContinuousTranslatorInterface;
 use Drupal\tmgmt\JobInterface;
 use Drupal\tmgmt\JobItemInterface;
 use Drupal\tmgmt\TMGMTException;
+use Drupal\tmgmt\Translator\AvailableResult;
 use Drupal\tmgmt\TranslatorInterface;
 use Drupal\tmgmt\TranslatorPluginBase;
 use GuzzleHttp\ClientInterface;
@@ -22,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "langbly",
  *   label = @Translation("Langbly"),
  *   description = @Translation("Machine translation via the Langbly API. LLM-powered translations for 100+ languages."),
- *   ui = "Drupal\tmgmt\TranslatorPluginUiBase",
+ *   ui = "Drupal\langbly_translator\Plugin\tmgmt\Translator\LangblyTranslatorUi",
  *   logo = "icons/langbly.svg",
  * )
  */
@@ -217,7 +218,9 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
 
     foreach ($data as $key => $value) {
       if ($key === '#text' && isset($data['#translate']) && $data['#translate']) {
-        $result[$prefix] = $data['#text'];
+        if (isset($data['#text']) && is_string($data['#text']) && trim($data['#text']) !== '') {
+          $result[$prefix] = $data['#text'];
+        }
         return $result;
       }
 
@@ -318,7 +321,7 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
     try {
       $response = $this->httpClient->post($url, [
         'headers' => [
-          'Authorization' => 'Bearer ' . $api_key,
+          'X-API-Key' => $api_key,
           'Content-Type' => 'application/json',
           'User-Agent' => 'langbly-drupal-tmgmt/1.0.0',
         ],
@@ -450,7 +453,6 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
    * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-    parent::validateConfigurationForm($form, $form_state);
 
     $values = $form_state->getValues();
     $api_key = $values['settings']['api_key'] ?? '';
@@ -466,7 +468,7 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
 
       $response = $this->httpClient->post($url, [
         'headers' => [
-          'Authorization' => 'Bearer ' . $api_key,
+          'X-API-Key' => $api_key,
           'Content-Type' => 'application/json',
         ],
         'json' => [
@@ -499,9 +501,9 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
    */
   protected function availabilityResult(bool $available, $message = NULL) {
     if ($available) {
-      return parent::checkAvailable($this->getTranslator() ?? NULL) ?: TRUE;
+      return AvailableResult::yes();
     }
-    return $message ? (object) ['success' => FALSE, 'message' => $message] : FALSE;
+    return $message ? AvailableResult::no($message) : AvailableResult::no(t('Translation is not available.'));
   }
 
 }

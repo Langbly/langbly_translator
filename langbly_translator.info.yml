@@ -1,7 +1,9 @@
 name: Langbly Translator
-description: 'Langbly machine translation provider for TMGMT. Translate content between 100+ languages using LLM-powered translations.'
+description: 'Context-aware machine translation provider for TMGMT. Translate content between 100+ languages, Google Translate v2 compatible.'
 type: module
-core_version_requirement: ^10 || ^11
+version: '1.0.0'
+core_version_requirement: ^10.2 || ^11
 package: Translation Management
+configure: entity.tmgmt_translator.collection
 dependencies:
   - tmgmt:tmgmt

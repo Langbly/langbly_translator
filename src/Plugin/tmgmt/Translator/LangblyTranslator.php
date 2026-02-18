@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @TranslatorPlugin(
  *   id = "langbly",
  *   label = @Translation("Langbly"),
- *   description = @Translation("Machine translation via the Langbly API. LLM-powered translations for 100+ languages."),
+ *   description = @Translation("Context-aware machine translation via the Langbly API. 100+ languages supported."),
  *   ui = "Drupal\langbly_translator\Plugin\tmgmt\Translator\LangblyTranslatorUi",
  *   logo = "icons/langbly.svg",
  * )

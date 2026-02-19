@@ -92,7 +92,7 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
   public function checkAvailable(TranslatorInterface $translator) {
     $api_key = $translator->getSetting('api_key');
     if (empty($api_key)) {
-      return $this->availabilityResult(FALSE, t('Langbly API key is not configured.'));
+      return $this->availabilityResult(FALSE, $this->t('Langbly API key is not configured.'));
     }
 
     try {
@@ -104,7 +104,7 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
       return $this->availabilityResult(TRUE);
     }
     catch (\Exception $e) {
-      return $this->availabilityResult(FALSE, t('Could not connect to Langbly API: @error', ['@error' => $e->getMessage()]));
+      return $this->availabilityResult(FALSE, $this->t('Could not connect to Langbly API: @error', ['@error' => $e->getMessage()]));
     }
   }
 
@@ -453,7 +453,6 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
    * {@inheritdoc}
    */
   public function validateConfigurationForm(array &$form, FormStateInterface $form_state) {
-
     $values = $form_state->getValues();
     $api_key = $values['settings']['api_key'] ?? '';
 
@@ -497,13 +496,14 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
    * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $message
    *   Optional message.
    *
-   * @return \Drupal\tmgmt\TranslatorPluginBase::availableResult|array
+   * @return \Drupal\tmgmt\Translator\AvailableResult
+   *   The availability result.
    */
   protected function availabilityResult(bool $available, $message = NULL) {
     if ($available) {
       return AvailableResult::yes();
     }
-    return $message ? AvailableResult::no($message) : AvailableResult::no(t('Translation is not available.'));
+    return $message ? AvailableResult::no($message) : AvailableResult::no($this->t('Translation is not available.'));
   }
 
 }

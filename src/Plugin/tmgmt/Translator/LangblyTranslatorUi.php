@@ -21,19 +21,19 @@ class LangblyTranslatorUi extends TranslatorPluginUiBase {
 
     $form['api_key'] = [
       '#type' => 'textfield',
-      '#title' => t('Langbly API Key'),
+      '#title' => $this->t('Langbly API Key'),
       '#default_value' => $translator->getSetting('api_key'),
       '#required' => TRUE,
-      '#description' => t('Your Langbly API key. Get one at <a href="@url" target="_blank">langbly.com/dashboard</a>.', [
+      '#description' => $this->t('Your Langbly API key. Get one at <a href="@url" target="_blank">langbly.com/dashboard</a>.', [
         '@url' => 'https://langbly.com/dashboard/api-keys',
       ]),
     ];
 
     $form['api_url'] = [
       '#type' => 'textfield',
-      '#title' => t('API Base URL'),
+      '#title' => $this->t('API Base URL'),
       '#default_value' => $translator->getSetting('api_url') ?: 'https://api.langbly.com',
-      '#description' => t('Only change this if you are using a custom endpoint.'),
+      '#description' => $this->t('Only change this if you are using a custom endpoint.'),
     ];
 
     return $form;

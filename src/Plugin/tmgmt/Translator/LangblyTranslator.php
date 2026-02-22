@@ -4,7 +4,6 @@ namespace Drupal\langbly_translator\Plugin\tmgmt\Translator;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\tmgmt\ContinuousTranslatorInterface;
 use Drupal\tmgmt\JobInterface;
 use Drupal\tmgmt\JobItemInterface;
 use Drupal\tmgmt\TMGMTException;
@@ -92,7 +91,7 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
   public function checkAvailable(TranslatorInterface $translator) {
     $api_key = $translator->getSetting('api_key');
     if (empty($api_key)) {
-      return $this->availabilityResult(FALSE, t('Langbly API key is not configured.'));
+      return $this->availabilityResult(FALSE, $this->t('Langbly API key is not configured.'));
     }
 
     try {
@@ -104,7 +103,7 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
       return $this->availabilityResult(TRUE);
     }
     catch (\Exception $e) {
-      return $this->availabilityResult(FALSE, t('Could not connect to Langbly API: @error', ['@error' => $e->getMessage()]));
+      return $this->availabilityResult(FALSE, $this->t('Could not connect to Langbly API: @error', ['@error' => $e->getMessage()]));
     }
   }
 
@@ -353,30 +352,76 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
    */
   public function getSupportedRemoteLanguages(TranslatorInterface $translator) {
     return [
-      'af' => 'Afrikaans', 'sq' => 'Albanian', 'am' => 'Amharic',
-      'ar' => 'Arabic', 'hy' => 'Armenian', 'az' => 'Azerbaijani',
-      'eu' => 'Basque', 'be' => 'Belarusian', 'bn' => 'Bengali',
-      'bs' => 'Bosnian', 'bg' => 'Bulgarian', 'ca' => 'Catalan',
-      'zh-CN' => 'Chinese (Simplified)', 'zh-TW' => 'Chinese (Traditional)',
-      'hr' => 'Croatian', 'cs' => 'Czech', 'da' => 'Danish',
-      'nl' => 'Dutch', 'en' => 'English', 'et' => 'Estonian',
-      'fi' => 'Finnish', 'fr' => 'French', 'gl' => 'Galician',
-      'ka' => 'Georgian', 'de' => 'German', 'el' => 'Greek',
-      'gu' => 'Gujarati', 'ht' => 'Haitian Creole', 'he' => 'Hebrew',
-      'hi' => 'Hindi', 'hu' => 'Hungarian', 'is' => 'Icelandic',
-      'id' => 'Indonesian', 'ga' => 'Irish', 'it' => 'Italian',
-      'ja' => 'Japanese', 'kn' => 'Kannada', 'kk' => 'Kazakh',
-      'ko' => 'Korean', 'lv' => 'Latvian', 'lt' => 'Lithuanian',
-      'mk' => 'Macedonian', 'ms' => 'Malay', 'ml' => 'Malayalam',
-      'mt' => 'Maltese', 'mr' => 'Marathi', 'mn' => 'Mongolian',
-      'ne' => 'Nepali', 'no' => 'Norwegian', 'fa' => 'Persian',
-      'pl' => 'Polish', 'pt' => 'Portuguese', 'pa' => 'Punjabi',
-      'ro' => 'Romanian', 'ru' => 'Russian', 'sr' => 'Serbian',
-      'sk' => 'Slovak', 'sl' => 'Slovenian', 'es' => 'Spanish',
-      'sw' => 'Swahili', 'sv' => 'Swedish', 'ta' => 'Tamil',
-      'te' => 'Telugu', 'th' => 'Thai', 'tr' => 'Turkish',
-      'uk' => 'Ukrainian', 'ur' => 'Urdu', 'uz' => 'Uzbek',
-      'vi' => 'Vietnamese', 'cy' => 'Welsh',
+      'af' => 'Afrikaans',
+      'sq' => 'Albanian',
+      'am' => 'Amharic',
+      'ar' => 'Arabic',
+      'hy' => 'Armenian',
+      'az' => 'Azerbaijani',
+      'eu' => 'Basque',
+      'be' => 'Belarusian',
+      'bn' => 'Bengali',
+      'bs' => 'Bosnian',
+      'bg' => 'Bulgarian',
+      'ca' => 'Catalan',
+      'zh-CN' => 'Chinese (Simplified)',
+      'zh-TW' => 'Chinese (Traditional)',
+      'hr' => 'Croatian',
+      'cs' => 'Czech',
+      'da' => 'Danish',
+      'nl' => 'Dutch',
+      'en' => 'English',
+      'et' => 'Estonian',
+      'fi' => 'Finnish',
+      'fr' => 'French',
+      'gl' => 'Galician',
+      'ka' => 'Georgian',
+      'de' => 'German',
+      'el' => 'Greek',
+      'gu' => 'Gujarati',
+      'ht' => 'Haitian Creole',
+      'he' => 'Hebrew',
+      'hi' => 'Hindi',
+      'hu' => 'Hungarian',
+      'is' => 'Icelandic',
+      'id' => 'Indonesian',
+      'ga' => 'Irish',
+      'it' => 'Italian',
+      'ja' => 'Japanese',
+      'kn' => 'Kannada',
+      'kk' => 'Kazakh',
+      'ko' => 'Korean',
+      'lv' => 'Latvian',
+      'lt' => 'Lithuanian',
+      'mk' => 'Macedonian',
+      'ms' => 'Malay',
+      'ml' => 'Malayalam',
+      'mt' => 'Maltese',
+      'mr' => 'Marathi',
+      'mn' => 'Mongolian',
+      'ne' => 'Nepali',
+      'no' => 'Norwegian',
+      'fa' => 'Persian',
+      'pl' => 'Polish',
+      'pt' => 'Portuguese',
+      'pa' => 'Punjabi',
+      'ro' => 'Romanian',
+      'ru' => 'Russian',
+      'sr' => 'Serbian',
+      'sk' => 'Slovak',
+      'sl' => 'Slovenian',
+      'es' => 'Spanish',
+      'sw' => 'Swahili',
+      'sv' => 'Swedish',
+      'ta' => 'Tamil',
+      'te' => 'Telugu',
+      'th' => 'Thai',
+      'tr' => 'Turkish',
+      'uk' => 'Ukrainian',
+      'ur' => 'Urdu',
+      'uz' => 'Uzbek',
+      'vi' => 'Vietnamese',
+      'cy' => 'Welsh',
     ];
   }
 
@@ -497,13 +542,14 @@ class LangblyTranslator extends TranslatorPluginBase implements ContainerFactory
    * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $message
    *   Optional message.
    *
-   * @return \Drupal\tmgmt\TranslatorPluginBase::availableResult|array
+   * @return \Drupal\tmgmt\Translator\AvailableResult
+   *   The availability result.
    */
   protected function availabilityResult(bool $available, $message = NULL) {
     if ($available) {
       return AvailableResult::yes();
     }
-    return $message ? AvailableResult::no($message) : AvailableResult::no(t('Translation is not available.'));
+    return $message ? AvailableResult::no($message) : AvailableResult::no($this->t('Translation is not available.'));
   }
 
 }

@@ -1,22 +1,16 @@
 ################
-# GitLab CI for drupal.org
+# GitLabCI template for Drupal projects.
 #
-# Runs Drupal coding standards (phpcs) and best practices (DrupalPractice)
-# checks on every push and merge request.
-#
-# Based on: https://www.drupal.org/docs/develop/git/using-gitlab-to-contribute-to-drupal/gitlab-ci
+# Based on: https://project.pages.drupalcode.org/gitlab_templates/
 ################
-
-variables:
-  OPT_IN_TEST_NEXT_MINOR: 0
-  OPT_IN_TEST_NEXT_MAJOR: 0
-  OPT_IN_TEST_PREVIOUS_MINOR: 0
-  OPT_IN_TEST_PREVIOUS_MAJOR: 0
-  _PHPUNIT_EXTRA: ''
-  SKIP_ESLINT: '1'
 
 include:
   - project: $_GITLAB_TEMPLATES_REPO
     ref: $_GITLAB_TEMPLATES_REF
     file:
-      - '/includes/include.drupalci.main.yml'
+      - "/includes/include.drupalci.main.yml"
+      - "/includes/include.drupalci.variables.yml"
+      - "/includes/include.drupalci.workflows.yml"
+
+variables:
+  SKIP_ESLINT: '1'

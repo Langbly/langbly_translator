@@ -1,5 +1,5 @@
 {
-  "name": "langbly/langbly_translator",
+  "name": "drupal/langbly_translator",
   "description": "Langbly machine translation provider for TMGMT",
   "type": "drupal-module",
   "license": "GPL-2.0-or-later",
@@ -12,8 +12,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/Langbly/langbly_translator/issues",
-    "source": "https://github.com/Langbly/langbly_translator"
+    "issues": "https://www.drupal.org/project/issues/langbly_translator",
+    "source": "https://git.drupalcode.org/project/langbly_translator"
   },
   "require": {
     "drupal/tmgmt": "^1.0"
